@@ -1,4 +1,10 @@
 // Curated from the public website. Update alongside index.html.
+// Personal interests supplied by the owner for public answers.
+// Add further approved details inside this block as needed.
+const personalInterests = `
+Hobbies: golf, Dallas Cowboys, piano,and cooking.
+`;
+
 export const background = `
 Oliver Shi is a technology investor focused on software and enterprise technology.
 Career: Associate at TPG in San Francisco, 2025–present, focused on software and enterprise technology growth investing.
@@ -13,5 +19,7 @@ Enterprise technology interest: systems connecting data, teams, and decisions.
 Growth investing interest: product advantage, enduring customer relationships, and long-term business value.
 Published perspective: technical understanding helps evaluate business models and product advantages; understanding the systems behind growth supports long-term investment judgment.
 Contact: https://www.linkedin.com/in/olivershi. No public email is supplied.
-No specific deals, portfolio investments, investment returns, personal details, availability, or employer positions are provided.
+Personal interests:
+${personalInterests.trim() || 'No personal interests have been provided yet. Do not infer hobbies.'}
+No specific deals, portfolio investments, investment returns, availability, or employer positions are provided. Do not infer personal details beyond those explicitly supplied above.
 `;
