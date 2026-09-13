@@ -10,7 +10,28 @@ Run `npm run build` to generate `dist/`. Run `npm start` to preview the producti
 
 ## Deploy to Vercel
 
-Import this repository as a Vercel project. `vercel.json` configures the build command (`npm run build`) and output directory (`dist`). Use the Other framework preset if prompted. Add `olivershi.com` in the project's domain settings and apply the DNS records Vercel provides.
+1. Sign in at [Vercel](https://vercel.com/new) with GitHub. Choose **Add New → Project**, find `euskejs/olivershi`, and select **Import**. If missing, grant the Vercel GitHub integration access to this repository.
+2. Confirm the project configuration:
+
+   | Setting | Value |
+   | --- | --- |
+   | Project name | `olivershi` (or another available name) |
+   | Framework preset | Other |
+   | Root directory | Repository root (`./`), not `dist` |
+   | Build command | `npm run build` |
+   | Output directory | `dist` |
+   | Install command | Leave the default |
+   | Production branch | `main` |
+
+   `vercel.json` already supplies the framework, build, and output settings. The website assets are served from `dist`; Vercel builds root `api/chat.js` as a separate Node function. Do not use `npm start` as the build command.
+3. Add `OPENAI_API_KEY` as a server-side environment variable to enable chat. `OPENAI_MODEL=gpt-4.1-mini` is optional because it is already the code default. Apply the key to Production; include Preview only if you want preview deployments to make billable AI calls. You can deploy without a key, but chat will show an unavailable message. Never commit the key.
+4. Click **Deploy**. Wait for **Ready**, then visit the generated `.vercel.app` address. Confirm the portrait, navigation, mobile layout, and the `/api/chat` function in the deployment output.
+5. Test chat from the website: ask about education, ask a follow-up, then ask for a fact not supplied in the biography (for example, specific deals). Verify grounded answers and acknowledgment of unknown information. A browser GET to `/api/chat` returns 405 by design; use the chat form to send POST requests. For failures, inspect the deployment's runtime logs and verify key, model access, and API billing. After changing an environment variable, redeploy; existing deployments do not receive the change.
+6. Before public launch, use the project's Firewall controls to add a rate-limit rule matching `/api/chat`, with a starting threshold of 10 requests per 60 seconds per IP and a block action. Check the available options and plan limits in your dashboard. The existing per-instance throttle is not a global usage cap; monitor API usage as well.
+7. If you control `olivershi.com`, open **Settings → Domains** and add it. Optionally add `www.olivershi.com` and redirect it to the apex domain. At your DNS provider, enter the exact records Vercel shows and wait for valid configuration and HTTPS. Avoid copying generic DNS values; use the values assigned to this project. If you choose a different permanent domain, update `index.html`, `robots.txt`, and `sitemap.xml` accordingly.
+8. Once linked, future pushes to `main` automatically trigger production deployments. Other branches can create preview deployments. Verify a production deployment after each release.
+
+References: [Git imports](https://vercel.com/docs/git), [environment variables](https://vercel.com/docs/environment-variables), [custom domains](https://vercel.com/docs/domains/working-with-domains/add-a-domain), [firewall rate limits](https://vercel.com/docs/vercel-firewall/vercel-waf/rate-limiting).
 
 ## Editing
 
@@ -26,7 +47,7 @@ Content is based on the supplied `Profile.pdf`, the user's biography, and [Olive
 
 ## Design direction
 
-`AGENT.md` defines the investor positioning and visual direction. The homepage pairs navy and warm ivory with bronze accents, serif headlines, and architectural SVG linework. Four focus areas cover software, artificial intelligence, enterprise technology, and growth investing. Mobile navigation stays visible in two rows; the site includes a skip link, visible keyboard focus, and reduced-motion support. LinkedIn is the contact route; no email address has been supplied.
+`AGENT.md` defines the investor positioning and visual direction. The homepage pairs navy and warm ivory with bronze accents, serif headlines, and architectural SVG linework. Four focus areas appear in this order: artificial intelligence, software, enterprise technology, and growth investing. Mobile navigation stays visible in two rows; the site includes a skip link, visible keyboard focus, and reduced-motion support. LinkedIn is the contact route; no email address has been supplied.
 
 ## Background chat
 
